@@ -7,7 +7,8 @@ var app = express();
 var messenger = require('./routes/messenger');
 var index = require('./routes/index');
 
-var mongoURI = "mongodb://localhost:27017/message_board_23857";
+var mongoURI = "mongodb://joshkeck:primedigital@ds031183.mongolab.com:31183/message_board_23857";
+//var mongoURI = "mongodb://localhost:27017/message_board_23857";
 var mongoDB = mongoose.connect(mongoURI).connection; //
 
 mongoDB.on('error', function(err){
