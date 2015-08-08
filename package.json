@@ -1,5 +1,5 @@
 {
-  "name": "mongo_lecture",
+  "name": "message_board",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/app.js"
   },
-  "author": "Scott Bromander",
+  "author": "Josh Keck",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
@@ -16,6 +16,7 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-uglify": "^0.9.1",
     "jquery": "^2.1.4",
+    "moment": "^2.10.6",
     "mongoose": "^4.1.1",
     "path": "^0.11.14"
   }

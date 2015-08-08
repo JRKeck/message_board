@@ -1,3 +1,4 @@
+var currentTime = moment().format();
 $(document).ready(function (){
   $('#inputForm').submit(function(event) {
     event.preventDefault();
@@ -13,11 +14,13 @@ $(document).ready(function (){
     });
   });
   $('.display').on('click', '.remove-card', function(){
+        var $el = $(this).parent();
         $.ajax({
             type: "DELETE",
-            url: "/messenger/" + $(this).data("id"),
+            url: "/messenger/" + $el.data("id"),
             success: function(){
                 console.log("Deleting");
+                $el.remove();
 
             },
             error: function(xhr, status){
@@ -27,7 +30,7 @@ $(document).ready(function (){
                 console.log("Delete Complete")
             }
         });
-      $(this).parent().remove();
+
     });
   getData();
 });
@@ -46,11 +49,12 @@ function writeToDom(data){
     $('.display').empty();
     $.each(data, function(){
         console.log(this.name);
-        $('.display').append('<div class="card"></div>');
+        $('.display').append('<div data-id="'+this._id+'" class="card"></div>');
         var $el = $('.display .card').last();
         $el.append('<div class="name">'+this.name+'</div>');
+        $el.append('<div class="time">'+moment(this.timestamp).fromNow()+'</div>');
         $el.append('<div class="message">'+this.message+'</div>');
-        $el.append('<button data-id="'+this._id+'" class="remove-card">Remove</button>');
+        $el.append('<button class="remove-card">Remove</button>');
 
     })
 }

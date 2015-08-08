@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 
 router.get("/secretpath", function(req, res, next){
-  var file = req.params[0] || 'views/index.html';
+  var file = req.params[0] || 'views/secret.html';
   res.sendFile(path.join(__dirname, "../public", file));
 
 });
