@@ -1,32 +1,93 @@
 @import "compass";
 
+// Variables
+$bg-dark: #0d0f11;
+$btn-color: #424850;
+
+
 html {
-  margin: 0;
-  height: 100%;
-  background-color: #3d444f; // Old browsers
-  @include filter-gradient(#3d444f, #0d0f11, horizontal); // IE6-9 fallback on horizontal gradient
-  @include background-image(radial-gradient(center, ellipse cover,  #3d444f 15%,#0d0f11 100%));
+    margin: 0;
+    height: 100%;
+background-color: #3d444f; // Old browsers
+@include filter-gradient(#3d444f, $bg-dark, horizontal); // IE6-9 fallback on horizontal gradient
+@include background-image(radial-gradient(center, ellipse cover,  #3d444f 15%,$bg-dark 100%));
 }
 body {
     background-color: transparent;
 }
 .container {
     max-width: 600px;
-    background-color: #fff;
+    background-color: #F8F7FC;
     margin-top: 40px;
     margin-bottom: 40px;
     padding: 20px
 }
-#inputForm {
+.msg-entry {
     .form-group {
         textarea {
             resize: none;
+            padding: 7px;
+        }
+        input#name{
+            padding: 7px;
         }
         input {
             width: 100%;
         }
     }
+    .submit-container {
+        padding-left:0px;
+        .btn {
+            border: 3px solid $btn-color;
+            background-color: transparent;
+            color: $btn-color;
+            font-weight: bold;
+            @include transition-property(all);
+            @include transition-duration(0.2s);
+            @include border-radius(7px);
+            &:hover {
+                background-color: $btn-color;
+                color: #fff;
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+
+    }
 
 }
+.card {
+    $avatar-img-size: 65px;
+    $avatar-margin: $avatar-img-size + 20px;
 
+    border-top: 1px solid #c2c2c4;
+    padding: 10px 20px;
+    .content {
+        margin-left: $avatar-margin;
+        position: relative;
+        min-height: $avatar-img-size;
+        img.avatar {
+            position: absolute;
+            top: 0px;
+            width: $avatar-img-size;
+            margin-left: -$avatar-margin;
+            @include border-radius(50%);
+            border: 5px solid #C2C2C4;
+        }
+        .name {
+            float: left;
+            font-weight: bold;
+            font-size: 110%;
+        }
+        .time {
+            float: right;
+            color: #969696;
+            font-size: 90%;
+        }
+        .message {
+            clear: both;
+        }
+    }
+}
 

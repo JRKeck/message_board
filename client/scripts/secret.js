@@ -7,6 +7,8 @@ $(document).ready(function() {
             success: function(){
                 console.log("Deleting");
                 $el.parent().remove();
+                //deleting will mess up the index so reset it
+                messageIndex = 0;
 
             },
             error: function(xhr, status){
@@ -20,10 +22,12 @@ $(document).ready(function() {
 });
 
 function writeCard(data, i) {
-  $('.display').prepend('<div class="card"></div>');
-  var $el = $('.display .card').first();
+  $('.display').prepend('<div class="card col-xs-12"></div>');
+  $('.display .card').first().append('<div class="content"></div>')
+  var $el = $('.display .content').first();
+  $el.append('<img src="/assets/imgs/blank_user.jpg" alt="user avatar" class="avatar">');
   $el.append('<div class="name">'+data[i].name+'</div>');
-  $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
+  $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow()+'</div>');
   $el.append('<div class="message">'+data[i].message+'</div>');
   $el.append('<button data-id="'+data[i]._id+'" class="remove-card">Remove</button>');
 

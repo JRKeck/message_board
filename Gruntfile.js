@@ -41,6 +41,14 @@ module.exports = function(grunt){
                     "moment/moment.js"
                 ],
                 "dest": "server/public/vendors/"
+            },
+            images: {
+                expand: true,
+                cwd: 'client',
+                src: [
+                    "imgs/*.*"
+                ],
+                "dest": "server/public/assets/"
             }
         }
     });
