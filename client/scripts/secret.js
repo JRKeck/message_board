@@ -19,16 +19,12 @@ $(document).ready(function() {
     });
 });
 
-function loadDisplay(data){
-    $('.display').empty();
-    $.each(data, function(){
-        console.log(this.name);
-        $('.display').append('<div class="card"></div>');
-        var $el = $('.display .card').last();
-        $el.append('<div class="name">'+this.name+'</div>');
-        $el.append('<div class="time">'+moment(this.timestamp).fromNow(true)+'</div>');
-        $el.append('<div class="message">'+this.message+'</div>');
-        $el.append('<button data-id="'+this._id+'" class="remove-card">Remove</button>');
-    })
-}
+function writeCard(data, i) {
+  $('.display').prepend('<div class="card"></div>');
+  var $el = $('.display .card').first();
+  $el.append('<div class="name">'+data[i].name+'</div>');
+  $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
+  $el.append('<div class="message">'+data[i].message+'</div>');
+  $el.append('<button data-id="'+data[i]._id+'" class="remove-card">Remove</button>');
 
+}

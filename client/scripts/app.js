@@ -1,4 +1,3 @@
-var currentTime = moment().format();//get time
 var messageIndex =  0; //hold index of last message
 
 //get data and load all
@@ -24,6 +23,7 @@ function loadDisplay(data){
 
 //get data and load new
 function updateData(){
+    recalcTime();
     $.ajax({
         type:"GET",
         url: "/messenger",
@@ -39,6 +39,7 @@ function updateDisplay(data) {
         $('.display .card').first().hide().slideDown();
     };
     messageIndex = i;
+
 }
 
 //create the message card
@@ -50,6 +51,17 @@ function writeCard(data, i) {
   $el.append('<div class="message">'+data[i].message+'</div>');
 
 }
+
+//recalculate the time when the page is updated
+function recalcTime() {
+    $('.time').each(function() {
+        var msgTime = $(this).attr("data-timestamp");
+        $(this).text(moment(msgTime).fromNow(true));
+        console.log($(this).prev().text());
+    });
+}
+
+//use custom formating for time display
 moment.locale('en-my-settings', {
     relativeTime : {
         s:  "%ds",
@@ -80,6 +92,6 @@ $(document).ready(function (){
             }
         });
     });
-
+    //display messages on page load
     getData();
 });
