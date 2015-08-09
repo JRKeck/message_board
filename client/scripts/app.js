@@ -1,6 +1,7 @@
-var currentTime = moment().format();//get time at pageload
-var messageIndex =  0; //hold index of last message loaded
+var currentTime = moment().format();//get time
+var messageIndex =  0; //hold index of last message
 
+//get data and load all
 function getData(){
     $.ajax({
         type:"GET",
@@ -11,19 +12,17 @@ function getData(){
     })
 }
 
+//load all messages to .display
 function loadDisplay(data){
     $('.display').empty();
     for (var i = 0; i < data.length; i++) {
-        $('.display').prepend('<div class="card"></div>');
-        var $el = $('.display .card').first();
-        $el.append('<div class="name">'+data[i].name+'</div>');
-        $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
-        $el.append('<div class="message">'+data[i].message+'</div>');
-        $el.hide().delay(i*10).slideDown();
+        writeCard(data, i);
+        $('.display .card').delay(i*10).slideDown();
     };
     messageIndex = i;
 }
 
+//get data and load new
 function updateData(){
     $.ajax({
         type:"GET",
@@ -33,17 +32,23 @@ function updateData(){
         }
     })
 }
-
+//load new messages to .display
 function updateDisplay(data) {
     for (var i = messageIndex; i < data.length; i++) {
-        $('.display').prepend('<div class="card"></div>');
-        var $el = $('.display .card').first();
-        $el.append('<div class="name">'+data[i].name+'</div>');
-        $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
-        $el.append('<div class="message">'+data[i].message+'</div>');
-        $el.hide().delay(i*50).slideDown();
+        writeCard(data, i);
+        $('.display .card').first().hide().slideDown();
     };
     messageIndex = i;
+}
+
+//create the message card
+function writeCard(data, i) {
+  $('.display').prepend('<div class="card"></div>');
+  var $el = $('.display .card').first();
+  $el.append('<div class="name">'+data[i].name+'</div>');
+  $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
+  $el.append('<div class="message">'+data[i].message+'</div>');
+
 }
 moment.locale('en-my-settings', {
     relativeTime : {
