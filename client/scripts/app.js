@@ -1,4 +1,5 @@
-var currentTime = moment().format();
+var currentTime = moment().format();//get time at pageload
+var messageIndex =  0; //hold index of last message loaded
 
 $(document).ready(function (){
   $('#inputForm').submit(function(event) {
@@ -10,7 +11,7 @@ $(document).ready(function (){
         url: "/messenger",
         data: formData,
         success: function(){
-            getData();
+            updateData();
         }
     });
   });
@@ -23,12 +24,12 @@ function getData(){
         type:"GET",
         url: "/messenger",
         success: function(data){
-            writeToDom(data);
+            writeToDisplay(data);
         }
     })
 }
 
-function writeToDom(data){
+function writeToDisplay(data){
     $('.display').empty();
     for (var i = 0; i < data.length; i++) {
         $('.display').prepend('<div class="card"></div>');
@@ -37,11 +38,31 @@ function writeToDom(data){
         $el.append('<div class="time">'+moment(data[i].timestamp).fromNow(true)+'</div>');
         $el.append('<div class="message">'+data[i].message+'</div>');
         $el.hide().delay(i*100).slideDown();
-
     };
-
+    messageIndex = i;
 }
 
+function updateData(){
+    $.ajax({
+        type:"GET",
+        url: "/messenger",
+        success: function(data){
+            updateDisplay(data);
+        }
+    })
+}
+
+function updateDisplay(data) {
+    for (var i = messageIndex; i < data.length; i++) {
+        $('.display').prepend('<div class="card"></div>');
+        var $el = $('.display .card').first();
+        $el.append('<div class="name">'+data[i].name+'</div>');
+        $el.append('<div class="time">'+moment(data[i].timestamp).fromNow(true)+'</div>');
+        $el.append('<div class="message">'+data[i].message+'</div>');
+        $el.hide().delay(i*100).slideDown();
+    };
+    messageIndex = i;
+}
 moment.locale('en-my-settings', {
     relativeTime : {
         s:  "%ds",

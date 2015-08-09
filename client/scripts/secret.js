@@ -19,7 +19,7 @@ $(document).ready(function() {
     });
 });
 
-function writeToDom(data){
+function writeToDisplay(data){
     $('.display').empty();
     $.each(data, function(){
         console.log(this.name);
