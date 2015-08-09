@@ -16,14 +16,13 @@ function loadDisplay(data){
     $('.display').empty();
     for (var i = 0; i < data.length; i++) {
         writeCard(data, i);
-        $('.display .card').delay(i*10).slideDown();
+        $('.display .card').first().hide().delay(i*500).slideDown();
     };
     messageIndex = i;
 }
 
 //get data and load new
 function updateData(){
-    recalcTime();
     $.ajax({
         type:"GET",
         url: "/messenger",
@@ -36,15 +35,15 @@ function updateData(){
 function updateDisplay(data) {
     for (var i = messageIndex; i < data.length; i++) {
         writeCard(data, i);
-        $('.display .card').first().hide().slideDown();
+        $('.display .card').first().hide().delay(500).slideDown();
     };
     messageIndex = i;
-
+    recalcTime();
 }
 
 //create the message card
 function writeCard(data, i) {
-  $('.display').prepend('<div class="card"></div>');
+  $('.display').prepend('<div class="card col-xs-12"></div>');
   var $el = $('.display .card').first();
   $el.append('<div class="name">'+data[i].name+'</div>');
   $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');

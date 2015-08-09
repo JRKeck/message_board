@@ -1,3 +1,32 @@
+@import "compass";
+
 html {
   margin: 0;
+  height: 100%;
+  background-color: #3d444f; // Old browsers
+  @include filter-gradient(#3d444f, #0d0f11, horizontal); // IE6-9 fallback on horizontal gradient
+  @include background-image(radial-gradient(center, ellipse cover,  #3d444f 15%,#0d0f11 100%));
 }
+body {
+    background-color: transparent;
+}
+.container {
+    max-width: 600px;
+    background-color: #fff;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px
+}
+#inputForm {
+    .form-group {
+        textarea {
+            resize: none;
+        }
+        input {
+            width: 100%;
+        }
+    }
+
+}
+
+

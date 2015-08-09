@@ -1,14 +1,12 @@
 module.exports = function(grunt){
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        sass: {
+        compass: {
             dist: {
                 options: {
-                    style: 'expanded',
-                    cache: 'false'
-                },
-                files: {
-                    'server/public/assets/styles/style.css' : 'client/styles/main.scss'
+                    line_comments: false,
+                    sassDir: 'client/styles',
+                    cssDir: 'server/public/assets/styles'
                 }
             }
         },
@@ -49,6 +47,6 @@ module.exports = function(grunt){
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.registerTask('default', ['sass', 'uglify','copy']);
+    grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.registerTask('default', ['compass', 'uglify','copy']);
 };
