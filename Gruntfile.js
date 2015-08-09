@@ -1,6 +1,17 @@
 module.exports = function(grunt){
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        sass: {
+            dist: {
+                options: {
+                    style: 'expanded',
+                    cache: 'false'
+                },
+                files: {
+                    'server/public/assets/styles/style.css' : 'client/styles/main.scss'
+                }
+            }
+        },
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -19,7 +30,9 @@ module.exports = function(grunt){
                 expand: true,
                 cwd: 'node_modules',
                 src: [
-                    "jquery/dist/jquery.min.js"
+                    "jquery/dist/jquery.min.js",
+                    "jquery/dist/jquery.min.map",
+                    "bootstrap/dist/css/bootstrap.min.css"
                 ],
                 "dest": "server/public/vendors/"
             },
@@ -36,6 +49,6 @@ module.exports = function(grunt){
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    grunt.registerTask('default', ['copy', 'uglify']);
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.registerTask('default', ['sass', 'uglify','copy']);
 };
