@@ -1,43 +1,25 @@
 var currentTime = moment().format();//get time at pageload
 var messageIndex =  0; //hold index of last message loaded
 
-$(document).ready(function (){
-  $('#inputForm').submit(function(event) {
-    event.preventDefault();
-      var formData = $("#inputForm").serialize();
-      console.log(formData);
-    $.ajax({
-        type: "POST",
-        url: "/messenger",
-        data: formData,
-        success: function(){
-            updateData();
-        }
-    });
-  });
-
-  getData();
-});
-
 function getData(){
     $.ajax({
         type:"GET",
         url: "/messenger",
         success: function(data){
-            writeToDisplay(data);
+            loadDisplay(data);
         }
     })
 }
 
-function writeToDisplay(data){
+function loadDisplay(data){
     $('.display').empty();
     for (var i = 0; i < data.length; i++) {
         $('.display').prepend('<div class="card"></div>');
         var $el = $('.display .card').first();
         $el.append('<div class="name">'+data[i].name+'</div>');
-        $el.append('<div class="time">'+moment(data[i].timestamp).fromNow(true)+'</div>');
+        $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
         $el.append('<div class="message">'+data[i].message+'</div>');
-        $el.hide().delay(i*100).slideDown();
+        $el.hide().delay(i*10).slideDown();
     };
     messageIndex = i;
 }
@@ -57,9 +39,9 @@ function updateDisplay(data) {
         $('.display').prepend('<div class="card"></div>');
         var $el = $('.display .card').first();
         $el.append('<div class="name">'+data[i].name+'</div>');
-        $el.append('<div class="time">'+moment(data[i].timestamp).fromNow(true)+'</div>');
+        $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow(true)+'</div>');
         $el.append('<div class="message">'+data[i].message+'</div>');
-        $el.hide().delay(i*100).slideDown();
+        $el.hide().delay(i*50).slideDown();
     };
     messageIndex = i;
 }
@@ -77,4 +59,22 @@ moment.locale('en-my-settings', {
         y:  "%dy",
         yy: "%dy"
     }
+});
+
+$(document).ready(function (){
+    $('#inputForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $("#inputForm").serialize();
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            url: "/messenger",
+            data: formData,
+            success: function(){
+                updateData();
+            }
+        });
+    });
+
+    getData();
 });
