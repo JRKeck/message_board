@@ -6,8 +6,10 @@ $(document).ready(function() {
             url: "/messenger/" + $el.data("id"),
             success: function(){
                 console.log("Deleting");
-                $el.parent().parent().remove();
-                //deleting will mess up the index so reset it
+                $el.parent().parent().slideUp(300);
+                $el.parent().parent().promise().done(function() { //remove the card after slideUp
+                    $(this).closest('tr').remove();
+                });
             },
             error: function(xhr, status){
                 alert("Error: ", status);

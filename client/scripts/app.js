@@ -50,7 +50,7 @@ function updateData(){
 function updateDisplay(data) {
     for (var i = testObjIndex+1; i < data.length; i++) {
         writeCard(data, i);
-        $('.display .card').first().hide().delay(500*i).slideDown();
+        $('.display .card').first().hide().delay(500).slideDown();
     };
     //fix time on the non-reloaded messages
     recalcTime();

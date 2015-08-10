@@ -147,6 +147,7 @@ body {
   color: #fff;
   background-color: #CA0B0B;
   padding: 5px 10px;
+  border: none;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
