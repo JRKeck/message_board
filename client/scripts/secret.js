@@ -6,10 +6,8 @@ $(document).ready(function() {
             url: "/messenger/" + $el.data("id"),
             success: function(){
                 console.log("Deleting");
-                $el.parent().remove();
+                $el.parent().parent().remove();
                 //deleting will mess up the index so reset it
-                messageIndex = 0;
-
             },
             error: function(xhr, status){
                 alert("Error: ", status);
@@ -29,6 +27,7 @@ function writeCard(data, i) {
   $el.append('<div class="name">'+data[i].name+'</div>');
   $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow()+'</div>');
   $el.append('<div class="message">'+data[i].message+'</div>');
-  $el.append('<button data-id="'+data[i]._id+'" class="remove-card">Remove</button>');
-
+  $el.append('<button data-id="'+data[i]._id+'" class="remove-card"><i class="fa fa-trash-o"></i></button>');
+  testObjId = data[i]._id;
+  testObjIndex = i;
 }

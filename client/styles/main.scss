@@ -15,10 +15,27 @@ background-color: #3d444f; // Old browsers
 body {
     background-color: transparent;
 }
+.refresh-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    @include opacity(0.6);
+    @include border-radius(7px);
+    @include transition-property(opacity);
+    @include transition-duration(0.2s);
+
+    &:hover {
+        @include opacity(1);
+    }
+}
 .container {
     max-width: 600px;
     background-color: #F8F7FC;
-    margin-top: 40px;
+    margin-top: 50px;
     margin-bottom: 40px;
     padding: 20px
 }
@@ -87,6 +104,17 @@ body {
         }
         .message {
             clear: both;
+            padding-right: 40px;
+        }
+        .remove-card {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            color: #fff;
+            background-color: #CA0B0B;
+            padding: 5px 10px;
+            @include border-radius(5px);
+
         }
     }
 }

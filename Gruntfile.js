@@ -42,6 +42,21 @@ module.exports = function(grunt){
                 ],
                 "dest": "server/public/vendors/"
             },
+            fontawesome: {
+                expand: true,
+                cwd: 'node_modules',
+                src: [
+                    "font-awesome/fonts/FontAwesome.otf",
+                    "font-awesome/fonts/fontawesome-webfont.eot",
+                    "font-awesome/fonts/fontawesome-webfont.svg",
+                    "font-awesome/fonts/fontawesome-webfont.ttf",
+                    "font-awesome/fonts/fontawesome-webfont.woff",
+                    "font-awesome/fonts/fontawesome-webfont.woff2",
+                    "font-awesome/css/font-awesome.min.css",
+                    "font-awesome/css/font-awesome.css.map"
+                ],
+                "dest": "server/public/vendors/"
+            },
             images: {
                 expand: true,
                 cwd: 'client',

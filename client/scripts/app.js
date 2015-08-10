@@ -1,4 +1,5 @@
-var messageIndex = 0; //hold index of last message
+var testObjIndex = 0; //hold index of last message
+var testObjId; //hold the last object id so we can make sure the data hasn't changed
 
 //get data and load all
 function getData(){
@@ -17,31 +18,41 @@ function loadDisplay(data){
     for (var i = 0; i < data.length; i++) {
         writeCard(data, i);
     };
-    messageIndex = i;
 }
 
 //get data and load new
 function updateData(){
-    if (messageIndex == 0) {
-        getData();
-    }
-    else {
-        $.ajax({
-            type:"GET",
-            url: "/messenger",
-            success: function(data){
-                updateDisplay(data);
+    $.ajax({
+        type:"GET",
+        url: "/messenger",
+        success: function(data){
+            //if the  database has changed reload the display instead of a partial update
+                //Are there less records in the db than the last time
+                if(testObjIndex > data.length-1){
+                    console.log("Data missmatch");
+                    loadDisplay(data);
+                }
+                //Does the last saved record still match
+                else if(data[testObjIndex]._id == testObjId) {
+                    console.log("Data Match");
+                    updateDisplay(data);
+                }
+                //If it doesn't match do a full display reload
+                else {
+                    console.log("Data missmatch");
+                    console.log(data[testObjIndex]._id +' Doesn\'t equal '+ testObjId)
+                    loadDisplay(data);
+                }
             }
         })
-    }
 }
 //load new messages to .display
 function updateDisplay(data) {
-    for (var i = messageIndex; i < data.length; i++) {
+    for (var i = testObjIndex+1; i < data.length; i++) {
         writeCard(data, i);
-        $('.display .card').first().hide().delay(500).slideDown();
+        $('.display .card').first().hide().delay(500*i).slideDown();
     };
-    messageIndex = i;
+    //fix time on the non-reloaded messages
     recalcTime();
 }
 
@@ -54,7 +65,8 @@ function writeCard(data, i) {
     $el.append('<div class="name">'+data[i].name+'</div>');
     $el.append('<div class="time" data-timestamp="'+data[i].timestamp+'">'+moment(data[i].timestamp).fromNow()+'</div>');
     $el.append('<div class="message">'+data[i].message+'</div>');
-
+    testObjId = data[i]._id;
+    testObjIndex = i;
 }
 
 //recalculate the time when the page is updated
@@ -64,7 +76,6 @@ function recalcTime() {
         $(this).text(moment(msgTime).fromNow());
     });
 }
-
 
 //use custom formating for time display
 moment.locale('en-my-settings', {
@@ -100,10 +111,17 @@ $(document).ready(function (){
             }
         });
     });
-//display messages on page load
-getData();
-var refreshDisplay = setInterval(function () {
-    updateData();
-}, 30000);
+
+    $('.refresh-btn').on('click', function() {
+        updateData();
+    });
+
+    //display messages on page load
+    getData();
+
+    //update the display every 30 seconds
+    var refreshDisplay = setInterval(function () {
+        updateData();
+    }, 30000);
 
 });
